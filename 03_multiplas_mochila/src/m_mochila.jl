@@ -17,22 +17,30 @@ model = Model(optimizer_with_attributes(Gurobi.Optimizer))
  =#
 
 #leitura de dados
-n = 8   #numero de projetos
-b = [100] # capital disponivel  
-p = [41 33 14 25 32 32 9 19]
-a = [47 40 17 27 34 23 5 44]
+n = 8   #numero de itens
+m = 2   #numero de mochilas
+k = 1   #numero de tipos de capacidade 
+b = [100 100] # capacidades disponivel  
+p = [41 33 14 25 32 32 9 19] #lucratividade
+w = [47 40 17 27 34 23 5 44] #pesos
+
+
 
 
 
 
 # formulação
 
+NJ = 1:n 
+NI = 1:m
+NK = 1:k
+@variable(model, x[i in NI, j in NJ], Bin )
 
-@variable(model, x[j = 1:n], Bin )
+@objective(model, Max, sum(p[j] * x[i,j]  for i in NI, j in NJ))
 
-@objective(model, Max, sum(p[j] * x[j]  for j = 1:n))
+@constraint(model,rest_capital[i in NI, k in NK], sum(w[i,j] * x[i,j] for j in NJ) <= b[i,k])
 
-@constraint(model,rest_capital, sum(a[j] * x[j] for j = 1:n) <= b[1])
+@constraint(model,rest_escolha[j in NJ], sum(x[i,j] for i in NI) <= 1)
 
 # Solve
 
