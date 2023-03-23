@@ -1,10 +1,10 @@
-name = "problemas_classicos"
+name = "caxeiro"
 uuid = "5ac4a26c-fc02-4a88-95e5-89948fc5697a"
 authors = ["valdirssilva <valdir.soares.da.silva25@gmail.com>"]
 version = "0.1.0"
 
 [deps]
+GraphPlot = "a2cc645c-3eea-5389-862e-a155d0052231"
 Gurobi = "2e9cd046-0924-5485-92f1-d5272153d98b"
 JuMP = "4076af6c-e467-56ae-b986-b466b2749572"
-PyPlot = "d330b81b-6aea-500a-939a-2ce795aea3ee"
-TriplotRecipes = "808ab39a-a642-4abf-81ff-4cb34ebbffa3"
+LightGraphs = "093fc24a-ae57-5d10-9952-331d41423f4d"

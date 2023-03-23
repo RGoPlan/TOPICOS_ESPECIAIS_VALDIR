@@ -17,10 +17,12 @@ model = Model(optimizer_with_attributes(Gurobi.Optimizer))
  =#
 
 #leitura de dados
-n = 8   #numero de itens
-m = 2   #numero de mochilas
-b = 100  # capacidades disponivel  
-w = [47 40 17 27 34 23 5 44] #pesos
+n = 10   #numero de itens
+m = 4   #numero de mochilas
+L = 11
+l = [2 3 3.5 4]
+b = [8 4 6 3 ]  # capacidades disponivel  
+
    
 
 
@@ -29,17 +31,18 @@ w = [47 40 17 27 34 23 5 44] #pesos
 
 # formulação
 
-NJ = 1:n 
+NJ = 1:m
 NI = 1:n
 
-@variable(model, x[i in NI, j in NJ], Bin )
+@variable(model, x[i in NI, j in NJ] >= 0, Int )
 @variable(model, y[i in NI], Bin)
 
 @objective(model, Min, sum(y[i]  for i in NI))
 
-@constraint(model,rest_escolha[j in NJ], sum(x[i,j] for i in NI) == 1)
 
-@constraint(model,rest_capital[i in NI], sum(w[j] * x[i,j] for j in NJ) <= b * y[i] )
+@constraint(model,rest_escolha[j in NJ], sum(x[i,j] for i in NI) >= b[j])
+
+@constraint(model,rest_capital[i in NI], sum(l[j] * x[i,j] for j in NJ) <= L * y[i] )
 
 
 
@@ -47,6 +50,5 @@ NI = 1:n
 
 optimize!(model)
 
-println("valor de otimo = ",objective_value(model))
 println("valor de x = ", value.(x))
 println("valor de y = ", value.(y))
