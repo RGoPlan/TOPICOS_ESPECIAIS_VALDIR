@@ -1,1 +1,0 @@
-julia src/problemas_classicos.jl mochila_0_1 paramFiles/stdFormsParams
