@@ -1,0 +1,8 @@
+name = "grafico"
+uuid = "123ac885-c6c7-4a09-955c-ee2ea78872d9"
+authors = ["valdirssilva <valdir.soares.da.silva25@gmail.com>"]
+version = "0.1.0"
+
+[deps]
+GraphPlot = "a2cc645c-3eea-5389-862e-a155d0052231"
+LightGraphs = "093fc24a-ae57-5d10-9952-331d41423f4d"

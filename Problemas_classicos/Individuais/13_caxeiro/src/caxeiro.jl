@@ -4,8 +4,8 @@ Pkg.activate(".")
 
 using JuMP
 using  Gurobi
-using GraphPlot
-using LightGraphs
+using Plots
+
 # criação do modelo vazio
 
 model = Model(optimizer_with_attributes(Gurobi.Optimizer))
@@ -23,6 +23,10 @@ n = 12
 #y = Array{Float64}(undef, n)
 x = [ 43 58 53 21 78 46 79 60 42 87 77 99]
 y = [ 23 76 64 38 68 57 06 05 30 02 97 79]
+
+         
+plot(x, y, seriestype=:scatter, title="Coordenadas x e y", xlabel="Coordenada x", ylabel="Coordenada y")  
+  
 
 c = Array{Float64}(undef, n,n)
 for i = 1:n
@@ -61,44 +65,10 @@ optimize!(model)
 for i = 1:n
      for j = 1:n
           if value(X[i,j]) > 0.9
-               println("valor de x[$i,$j] = ", value.(X[i,j]))
+               println("valor de X[$i,$j] = ", value.(X[i,j]))
           end
      end
 end
 
-
-#= g = SimpleGraph(n)
-
-for i in n
-     for j in n
-          if i != j && getvalue(X[i, j]) > 0.99
-          add_edge!(g, i, j)
-          
-          end
-     end
-end
-
-gplot(g) =#
-#=   
-gplot(
-     SimpleGraph(
-          [
-          for i in n
-               for j in n
-                    if i != j && getvalue(X[i, j]) > 0.99
-                    add_edge!(g, i, j)
-                    
-                    end
-               end
-          end   
-          ]
-     
-
-     )
-
-
-) =#
-               
-         
+           
    
-     

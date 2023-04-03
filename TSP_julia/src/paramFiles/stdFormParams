@@ -1,0 +1,5 @@
+timeLimit 600 #_Time_limit_for_standard_model_in_seconds
+gapTolerance 1e-8
+intFeasTolerance 1e-6
+numberOfThreads 1
+screenOutput 0
