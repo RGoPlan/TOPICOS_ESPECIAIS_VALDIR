@@ -1,8 +1,8 @@
-NAME : brd14051
-COMMENT : BR Deutschland in den Grenzen von 1989 (Bachem/Wottawa)
-TYPE : TSP
-DIMENSION : 14051
-EDGE_WEIGHT_TYPE : EUC_2D
+NAME: brd14051
+COMMENT: BR Deutschland in den Grenzen von 1989 (Bachem/Wottawa)
+TYPE: TSP
+DIMENSION: 14051
+EDGE_WEIGHT_TYPE: EUC_2D
 NODE_COORD_SECTION
     1    2918    6528
     2    2925    6597

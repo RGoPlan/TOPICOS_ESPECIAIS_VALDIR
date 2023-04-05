@@ -1,8 +1,8 @@
-NAME : rat99
-COMMENT : Rattled grid (Pulleyblank)
-TYPE : TSP
-DIMENSION : 99
-EDGE_WEIGHT_TYPE : EUC_2D
+NAME: rat99
+COMMENT: Rattled grid (Pulleyblank)
+TYPE: TSP
+DIMENSION: 99
+EDGE_WEIGHT_TYPE: EUC_2D
 NODE_COORD_SECTION
   1  6  4
   2 15 15

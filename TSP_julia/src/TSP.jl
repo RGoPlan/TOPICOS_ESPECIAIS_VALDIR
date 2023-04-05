@@ -14,8 +14,7 @@ using Data
 
 # To run the code: julia TSP.jl <inputListFile> 
 #                                         [1]             
-#inputListFile:   inputFiles/<all.txt> or <> or <>
-
+#inputListFile:   inputFiles/<ALL.txt> or <ATT.txt> or <CEIL_2D.txt> or <EUC_2D.txt> or <EXPLICIT.txt> or <GEO.txt>
 # Read input list file
 input = readdlm(String(ARGS[1]))
 
@@ -28,9 +27,21 @@ for inst = 1:numInst
     # Get the name of the file containing the instance data
     instanceFile = String(input[inst + 1])
 
-    println(instanceFile)
     # Read instance data
-    #data = Data.readData(instanceFile)
+    datatype = Data.readTypeData(instanceFile)
+
+    if datatype.COORD_Type == "ATT"
+        println("Pseudo-Euclidean distance")
+    elseif datatype.COORD_Type == "CEIL_2D"
+        println("Ceiling of the Euclidean distance")
+    elseif datatype.COORD_Type == "EUC_2D"
+        println("Euclidean distance")
+    elseif datatype.COORD_Type == "EXPLICIT"
+        #println("Weights are listed explicitly in the corresponding section")
+        data = Data.readDataEXPLICIT(instanceFile)
+    elseif datatype.COORD_Type == "GEO"
+        println("Geographical distance")   
+    end
 
 
 end
