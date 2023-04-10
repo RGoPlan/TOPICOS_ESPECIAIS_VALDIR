@@ -1,5 +1,6 @@
 1 #78
-src/Instancias/d18512.tsp
+src/Instancias/linhp318.tsp
+
 src/Instancias/eil51.tsp
 src/Instancias/berlin52.tsp
 src/Instancias/st70.tsp
@@ -37,6 +38,7 @@ src/Instancias/pr264.tsp
 src/Instancias/a280.tsp
 src/Instancias/pr299.tsp
 src/Instancias/lin318.tsp
+src/Instancias/linhp318.tsp
 src/Instancias/rd400.tsp
 src/Instancias/fl417.tsp
 src/Instancias/pr439.tsp

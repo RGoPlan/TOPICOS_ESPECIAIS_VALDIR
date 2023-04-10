@@ -20,7 +20,7 @@ model = Model(optimizer_with_attributes(Gurobi.Optimizer))
 n = 8   #numero de projetos
 b = [100] # capital disponivel  
 p = [41 33 14 25 32 32 9 19]
-a = [47 40 17 27 34 23 5 44]
+w = [47 40 17 27 34 23 5 44]
 
 
 
@@ -33,7 +33,7 @@ NJ = 1:n
 
 @objective(model, Max, sum(p[j] * x[j]  for j in NJ))
 
-@constraint(model,rest_capital, sum(a[j] * x[j] for j in NJ) <= b[1])
+@constraint(model,rest_capital, sum(w[j] * x[j] for j in NJ) <= b[1])
 
 # Solve
 

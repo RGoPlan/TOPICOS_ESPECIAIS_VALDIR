@@ -8,7 +8,7 @@ using JuMP
 using  Gurobi
 
 using Parameters
-#using Data
+using Data
 
 
 
@@ -41,8 +41,8 @@ dataFile = caminho*Problem
     #definir a estrutura de leitura do arquivo baseado no problema
 
 if Problem == "mochila_0_1"
-    data = Data.readData_M01(dataFile)
-elseif Problem == "mochila"
+    data = Data.readData_Mochila(dataFile)
+
     
 end
 #=
