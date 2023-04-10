@@ -201,8 +201,8 @@ function readDataGEO(instanceFile::String)
     longitude = Array{Float64}(undef,dim)
     for i = 1:dim
         posx[i] = instance[7+i,2]
-    
         posy[i] = instance[7+i,3]
+        
         degx[i] = round(posx[i], digits=0)
         degy[i] = round(posy[i], digits=0)
         minx[i] = posx[i] - degx[i]
