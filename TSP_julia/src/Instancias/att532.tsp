@@ -1,6 +1,6 @@
 NAME: att532
 TYPE: TSP
-COMMENT: 532-city problem (Padberg/Rinaldi)
+COMMENT: 532-city-problem-(Padberg/Rinaldi)
 DIMENSION: 532
 EDGE_WEIGHT_TYPE: ATT
 NODE_COORD_SECTION

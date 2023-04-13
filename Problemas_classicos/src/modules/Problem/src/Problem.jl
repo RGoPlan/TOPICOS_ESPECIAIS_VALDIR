@@ -14,9 +14,9 @@ end
 
  
 
-export ModelSolution, createModel!, solveModel!
+export ModelSolution, createModel_Mochila_0_1!,createModel_Mochila!
 
-function createModel_Mochila_0_1!(data::InstanceData_M01, model)
+function createModel_Mochila_0_1!(data::InstanceData_Mochila, model::Model)
 
     println("Creating model...")
    
@@ -26,7 +26,7 @@ function createModel_Mochila_0_1!(data::InstanceData_M01, model)
 
     @objective(model, Max, sum(data.p[j] * x[j]  for j in NJ))
 
-    @constraint(model,rest_capital, sum(data.a[j] * x[j] for j in NJ) <= data.b[1])
+    @constraint(model,rest_capital, sum(data.w[j] * x[j] for j in NJ) <= data.b[1])
      
     status = 0
 
@@ -38,16 +38,38 @@ function createModel_Mochila_0_1!(data::InstanceData_M01, model)
     return sol
 
 end
-function solveModel_Mochila_0_1!(model::Model, data::InstanceData_M01, sol::ModelSolution, stats::StatisticsData)
+function createModel_Mochila!(data::InstanceData_Mochila, model::Model)
+
+    println("Creating model...")
+   
+    NJ = 1:data.numItems
+
+    @variable(model, x[j in NJ]>=0, Int)
+
+    @objective(model, Max, sum(data.p[j] * x[j]  for j in NJ))
+
+    @constraint(model,rest_capital, sum(data.w[j] * x[j] for j in NJ) <= data.b[1])
+     
+    status = 0
+
+    x_values = Array{Float64}(undef, data.numItems)
+    fill!(x_values, 0.0)
+
+    sol = ModelSolution(10000000, x_values, status)
+
+    return sol
+
+end
+#= function solveModel_Mochila_0_1!(model::Model, data::InstanceData_Mochila, sol::ModelSolution)
     
     optimize!(model)
 
-    sol.status = termination_status(model)
+    #= sol.status = termination_status(model)
     stats.solStatus = sol.status
-    stats.totalTime = solve_time(model)
+    stats.totalTime = solve_time(model) =#
 
     # Get solution
-    if has_values(model) == true # Check if there is a primal solution available
+    #= if has_values(model) == true # Check if there is a primal solution available
         sol.obj = objective_value(model)
 
         println("Status = ", sol.status,
@@ -64,13 +86,13 @@ function solveModel_Mochila_0_1!(model::Model, data::InstanceData_M01, sol::Mode
         end
       
         
-    end
+    en =#d
 
     return zeros(1)
 
-end
+end =#
 
-function solveModel!(model, sol::ModelSolution, stats::StatisticsData)
+#= function solveModel!(model, sol::ModelSolution, stats::StatisticsData)
     optimize!(model)
 
     sol.status = termination_status(model)
@@ -92,7 +114,7 @@ function solveModel!(model, sol::ModelSolution, stats::StatisticsData)
 
 end
 
-function printSolution(data::InstanceData_M01, sol::ModelSolution)
+function printSolution(data::InstanceData_Mochila, sol::ModelSolution)
 
     # Print x[i,t] solution
     println("Production")
@@ -117,7 +139,7 @@ function printSolution(data::InstanceData_M01, sol::ModelSolution)
             end
         end
     end
-end
+end =#
 
 
 end #module

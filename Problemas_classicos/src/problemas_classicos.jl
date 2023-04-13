@@ -12,7 +12,7 @@ using Data
 
 
 
-#using Problem
+using Problem
 
 #using OutputStatistics
 
@@ -21,9 +21,9 @@ using Data
 
 #problemas 
 
-#mochila_0_1,  
+#mochila_0_1,mochila_0_1,  
 
-# run =  julia src/problemas_classicos.jl mochila_0_1 paramFiles/<stdFormParams>  outputFiles/<file name>
+# run =  julia src/problemas_classicos.jl mochila_0_1 
 
 
 
@@ -33,35 +33,25 @@ params = Parameters.readStdFormParameters("src/paramFiles/stdFormParams")
 
 # ler arquivos de dados do problema
 
-Problem = (String(ARGS[1]))
-caminho = "src/Instancias/"
+problem = (String(ARGS[1]))
+#caminho = "src/Instancias/"
 
-dataFile = caminho*Problem
+if problem == "mochila_0_1"
+    dataFile = "src/Instancias/mochila"
+elseif problem == "mochila"
+    dataFile = "src/Instancias/mochila"
+end
+
+
+#dataFile = caminho*problem
 
     #definir a estrutura de leitura do arquivo baseado no problema
 
-if Problem == "mochila_0_1"
+if problem == "mochila_0_1"
     data = Data.readData_Mochila(dataFile)
-
-    
+elseif problem == "mochila"
+    data = Data.readData_Mochila(dataFile)
 end
-#=
-# Initialize statistics data structure
-stats = OutputStatistics.initStatsData!()
-
-stats.formulation = String(ARGS[1])
-
-
-
-
-# Get the name of the file containing the instance data
-#instance = String(ARGS[1])
-
-# Read instance data
-data = Data.eadData_M01
-
-
-# criar aquivo de saida
 
 
 
@@ -69,7 +59,7 @@ data = Data.eadData_M01
 # criação do modelo vazio
 
 model = Model(optimizer_with_attributes(Gurobi.Optimizer,
-                                                "TimeLimit" => params.restrictedModelMaxTime,
+                                                "TimeLimit" => params.timeLimit,
                                                 "MIPGap" => params.MIPgapTolerance,
                                                 "IntFeasTol" => params.integerFeasibilityTolerance,
                                                 "Threads" => params.numberOfThreads,
@@ -80,16 +70,10 @@ model = Model(optimizer_with_attributes(Gurobi.Optimizer,
 
 
     # Build formulation
-    if stats.formulation == "mochila_0_1"
-        solution = Formulation.createModel_Mochila_0_1!(data, model)
-    elseif stats.formulation == "arenales"
-        solution = Formulation.createModelArenales!(data, model)
-    elseif stats.formulation == "briskorn" 
-        solution = Formulation.createModelBriskorn!(data, model)
-    elseif stats.formulation == "gopalakrishnan"
-        solution = Formulation.createModelGopalakrishnan!(data, model)
-    elseif stats.formulation == "haase"
-        solution = Formulation.createModelHaase!(data, model)
+    if problem == "mochila_0_1"
+        solution = Problem.createModel_Mochila_0_1!(data, model)
+    elseif problem == "mochila"
+        solution = Problem.createModel_Mochila!(data, model)
     end   
 
 
@@ -97,9 +81,8 @@ model = Model(optimizer_with_attributes(Gurobi.Optimizer,
 
 # Solve
 
-
-    # Solve
-    Formulation.solveModel!(model, solution, stats)
+    
+optimize!(model)
 
 println("valor de otimo = ",objective_value(model))
-println("valor de x = ", value.(x)) =#
+

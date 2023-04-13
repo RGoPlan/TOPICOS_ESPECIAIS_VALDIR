@@ -37,7 +37,7 @@ function readData_Mochila(dataFile::String)
 
     # Print instance data
     println("Instance data:",
-            "\n", instanceFile,
+            "\n", name,
             "\nNumber of items: ", n,
             "\nNumber of packs : ", m,
             "\nUnitary capacity: ", b,
