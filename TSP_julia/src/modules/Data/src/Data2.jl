@@ -18,52 +18,9 @@ export InstanceTypeData, readTypeData, InstanceData, readDataEUC_2D, readDataGEO
   
 
 function readTypeData(instanceFile::String)
+    instance = readdlm(instanceFile)
 
-    file = open(instanceFile)
-    fileText = read(file, String)
-    tokens = split(fileText) 
-    #tokens will have all the tokens of the input 
-    #file in a single vector. We will get the input token by token
-
-    sizeof(tokens)
-    #instance = readdlm(instanceFile)
-    dim  = sizeof(tokens)# parse(Int64,tokens[8])
-    name = "sdfsdf"
-    #dim = 12 
-    coord = "dfsd"
-
-    if coord == "EXPLICIT"
-
-        weights = "sdfsdf"
-    else
-        weights =""  
-    end
-    # Print instance data
-    print("Instance TYPE: ", 
-            "\n",name,
-            "\nDIMENSION: ",dim,
-            "\nEDGE_WEIGHT_TYPE: ", coord,
-            "\nEDGE_WEIGHT_FORMAT",weights) 
-
-           
-
-    instanceType = InstanceTypeData(name,dim,coord,weights)
-
-    return instanceType
-
-end
-function readTypeData2(instanceFile::String)
-
-    file = open(instanceFile)
-    fileText = read(file, String)
-    tokens = split(fileText) 
-    #tokens will have all the tokens of the input 
-    #file in a single vector. We will get the input token by token
-
-
-    #instance = readdlm(instanceFile)
-
-    name = parse(Int64,tokens[1])instance[1,2]
+    name = instance[1,2]
     dim = instance[4,2] 
     coord = instance[5,2]
 
@@ -74,7 +31,7 @@ function readTypeData2(instanceFile::String)
         weights =""  
     end
     # Print instance data
-    print("Instance TYPE: ", 
+    print("Instance TYPE: Float32", 
             "\n",name,
             "\nDIMENSION: ",dim,
             "\nEDGE_WEIGHT_TYPE: ", coord,
@@ -103,8 +60,8 @@ function readDataATT(instanceFile::String)
 
     end
     
-    r = Array{Float64}(undef, dim, dim)
-    c = Array{Float64}(undef, dim, dim)
+    r = Array{Float16}(undef, dim, dim)
+    c = Array{Float16}(undef, dim, dim)
     for i = 1:dim
         for j = 1:dim
            
@@ -118,8 +75,8 @@ function readDataATT(instanceFile::String)
         end
     end 
   
- 
-    prinln("maior valor de c",maximum(C))
+    println("maior valor de c",maximum(c))
+
            
    #=  for i = 1:dim
         for j = 1:dim
@@ -157,7 +114,8 @@ function readDataCEIL_2D(instanceFile::String)
         end
     end 
    
-       
+    println("maior valor de c",maximum(c))
+
     #= for i = 1:dim
         for j = 1:dim
             
@@ -174,16 +132,16 @@ end
 function readDataEUC_2D(instanceFile::String)
     instance = readdlm(instanceFile)
     dim = instance[4,2] 
-    posx = Array{Float64}(undef,dim)
-    posy = Array{Float64}(undef,dim)
+    posx = Array{Float32}(undef,dim)
+    posy = Array{Float32}(undef,dim)
     for i = 1:dim
         posx[i] = instance[6+i,2]
     
         posy[i] = instance[6+i,3]
 
     end
-  
-    c = Array{Float64}(undef, dim, dim)
+    c = Vector{}
+    c = Array{Float32}(undef, dim, dim)
     for i = 1:dim
         for j = 1:i
            
@@ -192,7 +150,9 @@ function readDataEUC_2D(instanceFile::String)
             
         end
     end 
-   
+
+    #println("\nmaior valor de c ",maximum(c))
+    println("tamanho de memoria ",sizeof(c)*1e-6)
       
     #= for i = 1:dim
         for j = 1:dim

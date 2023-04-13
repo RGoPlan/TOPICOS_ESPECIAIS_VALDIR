@@ -18,9 +18,75 @@ export InstanceTypeData, readTypeData, InstanceData, readDataEUC_2D, readDataGEO
   
 
 function readTypeData(instanceFile::String)
-    instance = readdlm(instanceFile)
 
-    name = instance[1,2]
+    file = open(instanceFile)
+    fileText = read(file, String)
+    tokens = split(fileText) 
+    #tokens will have all the tokens of the input 
+    #file in a single vector. We will get the input token by token
+
+ 
+    #instance = readdlm(instanceFile)
+    
+    aux = 1
+    i = 1
+    name  = ""
+    dim = ""
+    coord =""
+
+    while aux == 1
+
+        if tokens[i] == "NAME:"
+            name = tokens[i+1]
+        end
+        if tokens[i] == "DIMENSION:"
+            dim = tokens[i+1]
+        end
+
+        if tokens[i] == "EDGE_WEIGHT_TYPE:"
+            coord = tokens[i+1]
+        end
+       #=  if coord == "EXPLICIT"
+            if tokens[i] == "EDGE_WEIGHT_FORMAT:"
+                weights = tokens[i+1]
+            end
+        else
+            weights = ""  
+        end =#
+        if tokens[i] == "NODE_COORD_SECTION"
+            aux = 0
+        end
+        i += 1
+    end
+    
+  
+
+    # Print instance data
+    print("Instance TYPE: ", 
+            "\n",name ,
+            "\nDIMENSION: ",dim,
+            "\nEDGE_WEIGHT_TYPE: ", coord,
+            "\nEDGE_WEIGHT_FORMAT",weights) 
+
+           
+
+    instanceType = InstanceTypeData(name,dim,coord,weights)
+
+    return instanceType
+
+end
+function readTypeData2(instanceFile::String)
+
+    file = open(instanceFile)
+    fileText = read(file, String)
+    tokens = split(fileText) 
+    #tokens will have all the tokens of the input 
+    #file in a single vector. We will get the input token by token
+
+
+    #instance = readdlm(instanceFile)
+
+    name = parse(Int64,tokens[1])instance[1,2]
     dim = instance[4,2] 
     coord = instance[5,2]
 
@@ -60,8 +126,8 @@ function readDataATT(instanceFile::String)
 
     end
     
-    r = Array{Float16}(undef, dim, dim)
-    c = Array{Float16}(undef, dim, dim)
+    r = Array{Float64}(undef, dim, dim)
+    c = Array{Float64}(undef, dim, dim)
     for i = 1:dim
         for j = 1:dim
            
@@ -75,8 +141,8 @@ function readDataATT(instanceFile::String)
         end
     end 
   
-    println("maior valor de c",maximum(c))
-
+ 
+    prinln("maior valor de c",maximum(C))
            
    #=  for i = 1:dim
         for j = 1:dim

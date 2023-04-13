@@ -30,6 +30,9 @@ for inst = 1:numInst
 
     # Get Time
     timeStart = time_ns()
+    
+    # Initialize statistics data structure
+    #stats = OutputStatistics.initStatsData!()
 
     # Get the name of the file containing the instance data
     instanceFile = String(input[inst + 1])
@@ -58,5 +61,5 @@ for inst = 1:numInst
 
 
     readTime = (timeEndRF - timeStart) * 1e-9
-    println("readTimeeeee = ", readTime)
+    println("readTimeeeee = ", readTime,"\n" )
 end
