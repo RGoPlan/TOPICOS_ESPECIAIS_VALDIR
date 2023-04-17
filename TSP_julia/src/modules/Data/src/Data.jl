@@ -56,7 +56,7 @@ function readTypeData(instanceFile::String)
                 
             end
         end
-        if tokens[i] == "NODE_COORD_SECTION"
+        if tokens[i] == "NODE_COORD_SECTION" || tokens[i] == "EDGE_WEIGHT_SECTION"
             aux = i
             
         end
@@ -231,29 +231,68 @@ function readDataXY(instanceFile::String, datatype::InstanceTypeData)
 
 end
 
-function readDataEXPLICIT(instanceFile::String)
+function readDataEXPLICIT(instanceFile::String, datatype::InstanceTypeData)
    
     file = open(instanceFile)
     fileText = read(file, String)
     tokens = split(fileText) 
     
 
-    i = datatype.Aux
+    i = datatype.Aux +1
     j = 1
+    dim = datatype.DIMENSION
+    #c = Array{Float64}(undef, dim, dim)
+    c = zeros(Float32,dim,dim)
 
-    c = Array{Float64}(undef, dim, dim)
-
-    if datatype.EDGE_WEIGHT_FORMAT == " LOWER_DIAG_ROW"
+    if datatype.EDGE_WEIGHT_FORMAT == "LOWER_DIAG_ROW"
         for k = 1:dim
             for j = 1:k
 
-                c[k,i] = parse(Float32,tokens[i+1]) 
-                i += 1
-            end
-
+                c[k,j] = parse(Float32,tokens[i]) 
             
+                i += 1
+            end 
+
+        end
+    elseif datatype.EDGE_WEIGHT_FORMAT == "UPPER_ROW"
+        for k = 1:dim
+            for j = k:dim
+                if k != j
+                    c[k,j] = parse(Float32,tokens[i]) 
+                    #println("custo C[$k,$j] = ", c[k,j])
+                    i += 1
+                end
+            end 
+        end
+    elseif datatype.EDGE_WEIGHT_FORMAT == "FULL_MATRIX"
+        for k = 1:dim
+            for j = 1:dim
+               
+                c[k,j] = parse(Float32,tokens[i]) 
+                #println("custo C[$k,$j] = ", c[k,j])
+                i += 1
+               
+            end 
         end
 
+
+    end
+
+    
+    for i = 1:dim
+        for j = 1:dim
+           
+            println("custo C[$i,$j] = ", c[i,j])
+            
+        end
+    end
+    #= for i = 1:dim
+        for j = 1:dim
+            if c[i,j] > 0
+             println("custo C[$i,$j] = ", c[i,j])
+            end
+        end
+    end =#
     instance = InstanceData(c)
 
     return instance
