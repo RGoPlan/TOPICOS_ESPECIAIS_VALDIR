@@ -1,4 +1,4 @@
-111 #111
+1 #111
 src/Instancias/burma14.tsp
 src/Instancias/ulysses16.tsp
 src/Instancias/gr17.tsp
@@ -109,4 +109,5 @@ src/Instancias/brd14051.tsp
 src/Instancias/d15112.tsp
 src/Instancias/d18512.tsp
 src/Instancias/pla33810.tsp
+src/Instancias/pla85900.tsp
 src/Instancias/pla85900.tsp

@@ -42,22 +42,11 @@ for inst = 1:numInst
     datatype = Data.readTypeData(instanceFile)
     
 
-    if datatype.COORD_Type == "ATT"
-        #println("Pseudo-Euclidean distance")
-        #data = Data.readDataATT(instanceFile, datatype) 
-        data = Data.readDataXY(instanceFile, datatype)
-    elseif datatype.COORD_Type == "CEIL_2D"
-        #println("Ceiling of the Euclidean distance")
-        #data = Data.readDataCEIL_2D(instanceFile, datatype)
-        data = Data.readDataXY(instanceFile, datatype)
-    elseif datatype.COORD_Type == "EUC_2D"
-        #println("Euclidean distance")
-        #data = Data.readDataEUC_2D(instanceFile, datatype)
-        data = Data.readDataXY(instanceFile, datatype)
-    elseif datatype.COORD_Type == "EXPLICIT"
+    
+    if datatype.COORD_Type == "EXPLICIT"
         #println("Weights are listed explicitly in the corresponding section")
         data = Data.readDataEXPLICIT(instanceFile, datatype)
-    elseif datatype.COORD_Type == "GEO"
+    else 
        # println("Geographical distance")  
         #data = Data.readDataGEO(instanceFile, datatype) 
         data = Data.readDataXY(instanceFile, datatype)

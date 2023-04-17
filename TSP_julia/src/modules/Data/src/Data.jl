@@ -275,17 +275,26 @@ function readDataEXPLICIT(instanceFile::String, datatype::InstanceTypeData)
             end 
         end
 
-
+    elseif datatype.EDGE_WEIGHT_FORMAT == "UPPER_DIAG_ROW"
+        for k = 1:dim
+            for j = k:dim
+               
+                c[k,j] = parse(Float32,tokens[i]) 
+                #println("custo C[$k,$j] = ", c[k,j])
+                i += 1
+               
+            end 
+        end
     end
 
     
-    for i = 1:dim
+   #=  for i = 1:dim
         for j = 1:dim
            
             println("custo C[$i,$j] = ", c[i,j])
             
         end
-    end
+    end =#
     #= for i = 1:dim
         for j = 1:dim
             if c[i,j] > 0
