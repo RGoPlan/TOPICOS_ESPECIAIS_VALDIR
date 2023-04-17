@@ -22,13 +22,14 @@ input = readdlm(String(ARGS[1]))
 # Get number of instances to run
 numInst = input[1]
 
-
+timeInit = time_ns()
 
 
 # Run all numInst instances in the input list file
 for inst = 1:numInst
 
     # Get Time
+ 
     timeStart = time_ns()
     
     # Initialize statistics data structure
@@ -39,22 +40,27 @@ for inst = 1:numInst
 
     # Read instance data
     datatype = Data.readTypeData(instanceFile)
+    
 
     if datatype.COORD_Type == "ATT"
         #println("Pseudo-Euclidean distance")
-        data = Data.readDataATT(instanceFile) 
+        #data = Data.readDataATT(instanceFile, datatype) 
+        data = Data.readDataXY(instanceFile, datatype)
     elseif datatype.COORD_Type == "CEIL_2D"
         #println("Ceiling of the Euclidean distance")
-        data = Data.readDataCEIL_2D(instanceFile)
+        #data = Data.readDataCEIL_2D(instanceFile, datatype)
+        data = Data.readDataXY(instanceFile, datatype)
     elseif datatype.COORD_Type == "EUC_2D"
         #println("Euclidean distance")
-        data = Data.readDataEUC_2D(instanceFile)
+        #data = Data.readDataEUC_2D(instanceFile, datatype)
+        data = Data.readDataXY(instanceFile, datatype)
     elseif datatype.COORD_Type == "EXPLICIT"
         #println("Weights are listed explicitly in the corresponding section")
-        data = Data.readDataEXPLICIT(instanceFile)
+        data = Data.readDataEXPLICIT(instanceFile, datatype)
     elseif datatype.COORD_Type == "GEO"
-        println("Geographical distance")  
-        data = Data.readDataGEO(instanceFile) 
+       # println("Geographical distance")  
+        #data = Data.readDataGEO(instanceFile, datatype) 
+        data = Data.readDataXY(instanceFile, datatype)
     end
 
     timeEndRF = time_ns()
@@ -63,3 +69,6 @@ for inst = 1:numInst
     readTime = (timeEndRF - timeStart) * 1e-9
     println("readTimeeeee = ", readTime,"\n" )
 end
+timeEndRF = time_ns()
+totaltime = (timeEndRF - timeInit) * 1e-9
+println("readTimeeeee = ", totaltime ,"\n" )
